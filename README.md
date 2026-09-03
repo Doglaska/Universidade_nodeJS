@@ -2,11 +2,17 @@
 
 Instalar
 
-- node 
-``npm init -y``
+- nodemon
+``npm install --save-dev nodemon``
 
-- npm
-``npm install express``
+## Configurar o package.json
+"dev": "nodemon index.js"
+
+## Criar a estrutura MVC
+- models
+- routes
+- controllers
+- services
 
 ## Como funciona
 
