@@ -1,5 +1,5 @@
 const express = require("express");
-const alunoRouter = require("./routes/alunoRouter");
+const alunoRouter = require("./src/routes/alunoRouter");
 
 const app = express();
 app.use(express.json());
