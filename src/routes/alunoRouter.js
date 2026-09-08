@@ -11,7 +11,7 @@ router.post("/alunos", (req, res) =>{
     const {nome, email, nota1, nota2} = req.body;
 
     if(!nome || !email || !nota1 || !nota2){
-        return response.status(400).json({error:"Campos nome, email, nota1 e nota2 são obrigatórios"});
+        return res.status(400).json({error:"Campos nome, email, nota1 e nota2 são obrigatórios"});
     }
 
     const aluno = {
