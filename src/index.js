@@ -1,10 +1,10 @@
 const express = require("express");
-const alunoRouter = require("./src/routes/alunoRouter");
+const alunoRouter = require("./routes/alunoRouter");
 
 const app = express();
 app.use(express.json());
 
-app.use("/api", alunoRouter);
+app.use("/alunos", alunoRouter);
 const PORT = 3000;
 
 app.listen(PORT, () => {

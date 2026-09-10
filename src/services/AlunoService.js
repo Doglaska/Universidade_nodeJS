@@ -13,7 +13,7 @@ class AlunoService{
         }
 
         const novoAluno = {
-            id: alunos[alunos.lenght - 1].id + 1,
+            id: alunos[alunos.length-1].id+1,
             nome, email, nota1, nota2
         }
         
