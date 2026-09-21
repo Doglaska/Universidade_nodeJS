@@ -8,7 +8,7 @@ class AlunoService{
     create(aluno){
         const{nome, email, nota1, nota2} = aluno;
 
-        if(!nome || !email || !nota1 || !nota2){
+        if(!nome || !email || nota1 === undefined || nota2 === undefined){
             return null;
         }
 
@@ -35,7 +35,7 @@ class AlunoService{
             nota1: dados.nota1,
             nota2: dados.nota2
         }
-        
+
         return alunos[indexAluno]
     }
 

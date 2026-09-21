@@ -15,6 +15,28 @@ class AlunoController{
         return res.status(201).json({aluno});
     }
 
+    update(req, res) {
+        const { id } = req.params;
+        const aluno = AlunoService.update(id, req.body);
+
+        if (!aluno) {
+            return res.status(404).json({error: "Aluno não encontrado"});
+        }
+
+        return res.status(200).json({aluno});
+    }
+
+    patch(req, res) {
+        const { id } = req.params;
+        const aluno = AlunoService.patch(id, req.body);
+
+        if (!aluno) {
+            return res.status(404).json({error: "Aluno não encontrado"});
+        }
+
+        return res.status(200).json({aluno});
+    }
+
     delete(req, res){
         const {id} = req.params;
         const aluno = AlunoService.delete(id);
