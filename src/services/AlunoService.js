@@ -21,6 +21,36 @@ class AlunoService{
         return novoAluno;
     }
 
+    update(id, dados){
+        const indexAluno = alunos.findIndex((a) => a.id === parseInt(id));
+
+        if(indedxAluno === -1){
+            return null
+        }
+
+        alunos[indexAluno] = {
+            id: alunos[indexAluno].id,
+            nome: dados.nome,
+            email: dados.email,
+            nota1: dados.nota1,
+            nota2: dados.nota2
+        }
+        
+        return alunos[indexAluno]
+    }
+
+    patch(id, dados){
+        const indexAluno = alunos.findIndex((a) => a.id === parseInt(id));
+
+        if(indexAluno === -1){
+            return null
+        }
+
+        Object.assign(alunos[indexAluno], dados)
+
+        return alunos[indexAluno];
+    }
+
     delete(id){
         const indexAluno = alunos.findIndex((a) => a.id === parseInt(id));
 
