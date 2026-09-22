@@ -1,6 +1,14 @@
 const prisma = require("../databases/prisma");
 
 class AlunoService{
+    async findMany(page, pageSize){
+        const alunos = await prisma.aluno.findMany({
+            skip: (page -1)*pageSize,
+            take: Number(pageSize)
+        })
+        return alunos;
+    }
+
     async create(aluno){
         //create = insert
         //update = update

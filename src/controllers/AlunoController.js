@@ -1,10 +1,14 @@
 const AlunoService = require("../services/AlunoService")
 
 class AlunoController{
-    // findMany(req, res){
-    //     const alunos = AlunoService.findMany();
-    //     return res.status(200).json({alunos});
-    // }
+    async findMany(req, res){
+        let {page, pageSize} = req.query
+        page ||= 1;
+        pageSize ||= 10;
+
+        const alunos = await alunoService.findMany(page, pageSize);
+        return res.status(200).json({alunos});
+    }
 
     async create(req, res){
         const aluno = await AlunoService.create(req.body);
