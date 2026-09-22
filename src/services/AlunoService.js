@@ -1,7 +1,14 @@
 const prisma = require("../databases/prisma");
+const AlunoInvalidoError = require("../errors/AlunoInvalidoError");
+const PaginacaoInvalidaError = require("../errors/PaginanacaoInvalidaError");
 
 class AlunoService{
     async findMany(page, pageSize){
+        page = Number(page);
+        pageSize = Number(pageSize);
+        if(!page || page < 1 || !pageSize || pageSize < 1){
+            throw new PaginacaoInvalidaError();
+        }
         const alunos = await prisma.aluno.findMany({
             skip: (page -1)*pageSize,
             take: Number(pageSize)
@@ -10,6 +17,10 @@ class AlunoService{
     }
 
     async create(aluno){
+        const {nome, email} = aluno;
+        if(!nome || !email){
+            throw new AlunoInvalidoError();
+        }
         //create = insert
         //update = update
         //delete = delete
