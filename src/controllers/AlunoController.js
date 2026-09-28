@@ -1,4 +1,5 @@
 const AlunoService = require("../services/AlunoService")
+const idParamSchema = require("../schemas/alunoSchema")
 
 class AlunoController{
     async findMany(req, res){
@@ -23,6 +24,22 @@ class AlunoController{
             return res.status(201).json({aluno});
         }catch(e){
             return res.status(e.statusCode).json({error: e.message});
+        }
+    }
+
+    async finndOne(req, res){
+        try{
+            const result = idParamSchema.safeParse(req.params);
+
+            if(!result.success){
+                const msgErro = result.error.issues[0].message;
+                return res.status(400).json({message: msgErro})
+            }
+
+            const {id} = result.data;
+            return res.status(400).json({msg: "ID valido e copnvertido" + id})
+        }catch{
+            return res.status(e.statusCode || 500).json({error: e.message})
         }
     }
 
