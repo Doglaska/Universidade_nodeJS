@@ -4,4 +4,8 @@ const alunoSchema = z.object({
     email: z.string().trim().email("E-mail Inválido.")
 });
 
-module.exports = alunoSchema;
+const idParamSchema = z.object({
+    id: z.string().regex(/^\d+$/, "ID deve ser númerico")
+})
+
+module.exports = {alunoSchema, idParamSchema};
