@@ -32,8 +32,7 @@ class AlunoController{
             const result = idParamSchema.safeParse(req.params);
 
             if(!result.success){
-                const msgErro = result.error.issues.message;
-                return res.status(400).json({message: msgErro})
+                return res.status(400).json({message: "ID deve ser numerico"});
             }
 
             const {id} = result.data;
@@ -41,7 +40,8 @@ class AlunoController{
 
             return res.status(200).json(aluno)
         }catch(e){
-            return res.status(e.statusCode || 500).json({error: e.message})
+            const statusCode = e.statusCode || 500;
+            return res.status(statusCode || 500).json({message: e.message})
         }
     }
 
