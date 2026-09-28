@@ -32,14 +32,14 @@ class AlunoController{
             const result = idParamSchema.safeParse(req.params);
 
             if(!result.success){
-                const msgErro = result.error.issues[0].message;
+                const msgErro = result.error.issues.message;
                 return res.status(400).json({message: msgErro})
             }
 
             const {id} = result.data;
-            const aluno = await AlunoService.finndOne(id);
+            const aluno = await AlunoService.findOne(id);
 
-            return res.status(200).json({aluno})
+            return res.status(200).json(aluno)
         }catch(e){
             return res.status(e.statusCode || 500).json({error: e.message})
         }
