@@ -1,6 +1,7 @@
 const prisma = require("../databases/prisma");
 const AlunoInvalidoError = require("../errors/AlunoInvalidoError");
 const PaginacaoInvalidaError = require("../errors/PaginanacaoInvalidaError");
+const AlunoNaoEncontradoError = require("../errors/AlunoNaoEncontradoError");
 
 class AlunoService{
     async findMany(page, pageSize){
@@ -32,10 +33,11 @@ class AlunoService{
 
     async findOne(id){
         const aluno = await prisma.aluno.findUnique({
-            where: {
-                id: id
-            }
+            where:{ id }
         })
+        if(!aluno){
+            throw new AlunoNaoEncontradoError();
+        }
         return aluno;
     }
 }
