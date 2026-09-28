@@ -45,53 +45,34 @@ class AlunoService{
         }
         return aluno;
     }
+
+    async update(id, dados){
+        const idNumero = parseInt(id);
+
+        const alunoExistente = await prisma.aluno.findUnique({
+            where: {id: idNumero}
+        });
+
+        //O método AlunoNaoEncontradoError pode ser reutilizado por ser a mesma regra de negócio do findUnique.
+        if(!alunoExistente){
+            throw new AlunoNaoEncontradoError();
+        }
+
+        //O AlunoInvalidoError é reutilizado quando o campo vem vazio, dando o erro de bad request 400.
+        if (!dados || Object.keys(dados).length === 0) {
+            throw new AlunoInvalidoError("Nenhum dado válido fornecido para atualização");
+        }
+
+        const alunoAtualizado = await prisma.aluno.update({
+            where: { id: idNumero },
+            data: dados
+        });
+
+        return alunoAtualizado;
+    }
 }
 
-module.exports = new AlunoService();
-
-
-/** const alunos = require("../models/alunoModel");
-
-class AlunoService{
-    findMany(){
-        return alunos;
-    }
-
-    create(aluno){
-        const{nome, email, nota1, nota2} = aluno;
-
-        if(!nome || !email || nota1 === undefined || nota2 === undefined){
-            return null;
-        }
-
-        const novoAluno = {
-            id: alunos[alunos.length-1].id+1,
-            nome, email, nota1, nota2
-        }
-        
-        alunos.push(novoAluno);
-        return novoAluno;
-    }
-
-    update(id, dados){
-        const indexAluno = alunos.findIndex((a) => a.id === parseInt(id));
-
-        if(indedxAluno === -1){
-            return null
-        }
-
-        alunos[indexAluno] = {
-            id: alunos[indexAluno].id,
-            nome: dados.nome,
-            email: dados.email,
-            nota1: dados.nota1,
-            nota2: dados.nota2
-        }
-
-        return alunos[indexAluno]
-    }
-
-    patch(id, dados){
+    /**patch(id, dados){
         const indexAluno = alunos.findIndex((a) => a.id === parseInt(id));
 
         if(indexAluno === -1){
@@ -116,3 +97,5 @@ class AlunoService{
 }
 
 module.exports = new AlunoService(); **/
+
+module.exports = new AlunoService();
