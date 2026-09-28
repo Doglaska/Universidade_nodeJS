@@ -4,17 +4,22 @@ const PaginacaoInvalidaError = require("../errors/PaginanacaoInvalidaError");
 const AlunoNaoEncontradoError = require("../errors/AlunoNaoEncontradoError");
 
 class AlunoService{
-    async findMany(page, pageSize){
+    async findMany(page, pageSize, orderBy = "id", order = "asc"){
         page = Number(page);
         pageSize = Number(pageSize);
         if(!page || page < 1 || !pageSize || pageSize < 1){
             throw new PaginacaoInvalidaError();
         }
+
+        const direcaoOrdem = (order === "asc" || order === "desc") ? order : "asc";
+
         const alunos = await prisma.aluno.findMany({
             skip: (page -1)*pageSize,
-            take: Number(pageSize)
+            take: pageSize, orderBy: {[orderBy]: direcaoOrdem}
         })
-        return alunos;
+
+        const total= await prisma.aluno.count();
+        return {alunos, total};
     }
 
     async create(aluno){
