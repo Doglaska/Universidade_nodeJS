@@ -30,7 +30,7 @@ class AlunoController{
         }
     }
 
-    async finndOne(req, res){
+    async findOne(req, res){
         try{
             const result = idParamSchema.safeParse(req.params);
 
@@ -45,7 +45,7 @@ class AlunoController{
             return res.status(200).json(aluno)
         }catch(e){
             const statusCode = e.statusCode || 500;
-            return res.status(statusCode).json({message: e.message})
+            return res.status(statusCode).json({error: e.message})
         }
     }
 
