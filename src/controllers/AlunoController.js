@@ -49,27 +49,31 @@ class AlunoController{
         }
     }
 
-//     update(req, res) {
-//         const { id } = req.params;
-//         const aluno = AlunoService.update(id, req.body);
+    async update(req, res) {
+        try{
+            const { id } = req.params;
+            const aluno = await AlunoService.update(id, req.body);
 
-//         if (!aluno) {
-//             return res.status(404).json({error: "Aluno não encontrado"});
-//         }
+            return res.status(200).json({aluno});
+        }catch(e){
+            if(e.code === "P2002"){
+                return res.status(409).json({error: "Email ja cadastrado"})
+            }
+            const statusCode = e.statusCode || 500;
+            return res.status(statusCode).json({error: e.message})
+        }
+    }
 
-//         return res.status(200).json({aluno});
-//     }
+    // patch(req, res) {
+    //     const { id } = req.params;
+    //     const aluno = AlunoService.patch(id, req.body);
 
-//     patch(req, res) {
-//         const { id } = req.params;
-//         const aluno = AlunoService.patch(id, req.body);
+    //     if (!aluno) {
+    //         return res.status(404).json({error: "Aluno não encontrado"});
+    //     }
 
-//         if (!aluno) {
-//             return res.status(404).json({error: "Aluno não encontrado"});
-//         }
-
-//         return res.status(200).json({aluno});
-//     }
+    //     return res.status(200).json({aluno});
+    // }
 
 //     delete(req, res){
 //         const {id} = req.params;
