@@ -4,14 +4,17 @@ const idParamSchema = require("../schemas/alunoSchema")
 class AlunoController{
     async findMany(req, res){
         try{
-            let {page, pageSize} = req.query
+            let {page, pageSize, orderBy, order} = req.query
             page ||= 1;
             pageSize ||= 10;
+            orderBy ||= "id";
+            order ||= "asc"
     
-            const alunos = await AlunoService.findMany(page, pageSize);
-            return res.status(200).json({alunos});
+            const {alunos, total} = await AlunoService.findMany(page, pageSize, orderBy, order);
+            return res.status(200).json({alunos, total});
         }catch(e){
-            return res.status(e.statusCode).json({error: e.message});
+            const statusCode = e.statusCode || 500
+            return res.status(statusCode).json({error: e.message});
         }
     }
 
