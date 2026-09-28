@@ -37,8 +37,10 @@ class AlunoController{
             }
 
             const {id} = result.data;
-            return res.status(400).json({msg: "ID valido e copnvertido" + id})
-        }catch{
+            const aluno = await AlunoService.finndOne(id);
+
+            return res.status(200).json({aluno})
+        }catch(e){
             return res.status(e.statusCode || 500).json({error: e.message})
         }
     }
