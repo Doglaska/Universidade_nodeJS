@@ -29,6 +29,15 @@ class AlunoService{
 
         return novoAluno;
     }
+
+    async findOne(id){
+        const aluno = await prisma.aluno.findUnique({
+            where: {
+                id: id
+            }
+        })
+        return aluno;
+    }
 }
 
 module.exports = new AlunoService();
