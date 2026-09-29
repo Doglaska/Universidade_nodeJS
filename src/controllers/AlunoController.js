@@ -75,15 +75,17 @@ class AlunoController{
     //     return res.status(200).json({aluno});
     // }
 
-//     delete(req, res){
-//         const {id} = req.params;
-//         const aluno = AlunoService.delete(id);
-
-//         if(!aluno){
-//             return res.status(404).json({error: "Aluno não encontrado"});
-//         }
-//         return res.status(204).end();
-//     }
+    async delete(req, res){
+        try{
+            const {id} = req.params;
+            await AlunoService.delete(id);
+    
+            return res.status(204).end();
+        }catch(e){
+            const statusCode = e.statusCode || 500;
+            return res.status(statusCode).json({error: e.message});
+        }
+    }
 }
 
 module.exports = new AlunoController;
