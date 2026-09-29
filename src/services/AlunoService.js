@@ -38,7 +38,7 @@ class AlunoService{
 
     async findOne(id){
         const aluno = await prisma.aluno.findUnique({
-            where:{ id }
+            where:{ id: Number(id) }
         })
         if(!aluno){
             throw new AlunoNaoEncontradoError();
@@ -70,7 +70,6 @@ class AlunoService{
 
         return alunoAtualizado;
     }
-}
 
     /**patch(id, dados){
         const indexAluno = alunos.findIndex((a) => a.id === parseInt(id));
@@ -82,20 +81,24 @@ class AlunoService{
         Object.assign(alunos[indexAluno], dados)
 
         return alunos[indexAluno];
-    }
+    }**/
 
-    delete(id){
-        const indexAluno = alunos.findIndex((a) => a.id === parseInt(id));
+    async delete(id){
+        const idNumero = parseInt(id);
 
-        if(indexAluno === -1){
-            return null;
+        const alunoExistente = await prisma.aluno.findUnique({
+            where: {id: idNumero}
+        })
+
+        if(!alunoExistente){
+            throw new AlunoNaoEncontradoError();
         }
 
-        const [aluno] = alunos.splice(indexAluno, 1)
-        return aluno;
+        const alunoDeletado = await prisma.aluno.delete({
+            where: {id: idNumero}
+        })
+        return alunoDeletado;
     }
 }
-
-module.exports = new AlunoService(); **/
 
 module.exports = new AlunoService();

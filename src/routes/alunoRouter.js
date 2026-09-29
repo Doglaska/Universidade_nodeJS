@@ -7,8 +7,8 @@ const router = express.Router();
 router.get("/", alunoController.findMany);
 router.get("/:id", alunoController.findOne);
 router.post("/", validarAluno, alunoController.create);
-// router.put("/:id", alunoController.update);
+router.put("/:id", alunoController.update);
 // router.patch("/:id", alunoController.patch);
-// router.delete("/:id", alunoController.delete);
+router.delete("/:id", alunoController.delete);
 
 module.exports = router;
